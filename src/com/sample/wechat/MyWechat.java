@@ -2,6 +2,7 @@ package com.sample.wechat;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.sword.wechat4j.WechatSupport;
 
@@ -9,44 +10,17 @@ public class MyWechat extends WechatSupport {
 	
 	private static Logger logger = Logger.getLogger(MyWechat.class);
 
-
 	public MyWechat(HttpServletRequest request) {
 		super(request);
 	}
 
-	@Override
-	protected void click() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void location() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void onImage() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void onLink() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void onLocation() {
-		// TODO Auto-generated method stub
-
-	}
-
+	/**
+	 * 文本消息
+	 */
 	@Override
 	protected void onText() {
 		String content = super.wechatRequest.getContent().trim();
+//		String msgId = wechatRequest.getMsgId();
 		logger.info(content);
 		//文本测试
 		if(content.equals("1")){
@@ -63,41 +37,229 @@ public class MyWechat extends WechatSupport {
 					+ "2 图文\n");
 		}
 	}
+	/**
+	 * 图片消息
+	 */
+	@Override
+	protected void onImage() {
+		String picUrl = wechatRequest.getPicUrl();
+		String MediaId = wechatRequest.getMediaId();
+		String MsgId = wechatRequest.getMsgId();
+		
+		String result = "图片消息picUrl:" + picUrl + ", MediaId:" + MediaId + ", MsgId:" + MsgId;
+		logger.info(result);
+		responseText(result);
+	}
 
+	/**
+	 * 语音消息
+	 */
+	@Override
+	protected void onVoice() {
+		String Format = wechatRequest.getFormat();
+		String MediaId = wechatRequest.getMediaId();//视频消息媒体id，可以调用多媒体文件下载接口拉取数据
+		String MsgId = wechatRequest.getMsgId();
+		
+		String result = "语音消息Format:" + Format + ", MediaId:" + MediaId + ", MsgId:" + MsgId;
+		logger.info(result);
+		responseText(result);		
+	}
+
+	/**
+	 * 视频消息
+	 */
+	@Override
+	protected void onVideo() {
+		String ThumbMediaId = wechatRequest.getThumbMediaId();
+		String MediaId = wechatRequest.getMediaId();//语音消息媒体id，可以调用多媒体文件下载接口拉取数据
+		String MsgId = wechatRequest.getMsgId();
+		
+		String result = "视频消息ThumbMediaId:" + ThumbMediaId + ", MediaId:" + MediaId + ", MsgId:" + MsgId;
+		logger.info(result);
+		responseText(result);		
+	}
+	
+	/**
+	 * 地理位置消息
+	 */
+	@Override
+	protected void onLocation() {
+		String Location_X = wechatRequest.getLocation_X();
+		String Location_Y = wechatRequest.getLocation_Y();
+		String Scale = wechatRequest.getScale();
+		String Label = wechatRequest.getLabel();
+		String MsgId = wechatRequest.getMsgId();
+		
+		String result = "地理位置消息Location_X:" + Location_X + ", Location_Y:" + Location_Y + 
+				", Scale:" + Scale + ", Label:" + Label + 
+				", MsgId:" + MsgId;
+		logger.info(result);
+		responseText(result);	
+	}
+	/**
+	 * 链接消息
+	 */
+	@Override
+	protected void onLink() {
+		String Title = wechatRequest.getTitle();
+		String Description = wechatRequest.getDescription();
+		String Url = wechatRequest.getUrl();
+		String MsgId = wechatRequest.getMsgId();
+		
+		String result = "链接消息Title:" + Title + ", Description:" + Description + 
+				", Url:" + Url + 
+				", MsgId:" + MsgId;
+		logger.info(result);
+		responseText(result);	
+	}
+	
+	
+	/**
+	 * 未知消息类型，错误处理
+	 */
 	@Override
 	protected void onUnknown() {
-		// TODO Auto-generated method stub
+		String msgType = wechatRequest.getMsgType();
+		
+		String result = "未知消息msgType:" + msgType;
+		logger.info(result);
+		responseText(result);
 
 	}
 
+	/**
+	 * 扫描二维码事件
+	 */
 	@Override
 	protected void scan() {
-		// TODO Auto-generated method stub
-
+		String FromUserName = wechatRequest.getFromUserName();
+		String Ticket = wechatRequest.getTicket();
+		
+		String result = "扫描二维码事件FromUserName:" + FromUserName + ", Ticket:" + Ticket;
+		logger.info(result);
+		responseText(result);
 	}
 
+	/**
+	 * 订阅事件
+	 */
 	@Override
 	protected void subscribe() {
-		// TODO Auto-generated method stub
+		String FromUserName = wechatRequest.getFromUserName();
+		//用户未关注时扫描二维码事件,会多一个EventKey和Ticket节点
+		String Ticket = wechatRequest.getTicket();
 
+		String result = "订阅事件FromUserName:" + FromUserName;
+		if(StringUtils.isNotBlank(Ticket)){
+			result = "扫描带场景值二维码事件FromUserName:" + FromUserName + ", Ticket:" + Ticket;
+		}
+		logger.info(result);
+		responseText(result);
 	}
-
+	
+	/**
+	 * 取消订阅事件
+	 */
 	@Override
 	protected void unSubscribe() {
-		// TODO Auto-generated method stub
-
+		String FromUserName = wechatRequest.getFromUserName();
+		String result = "取消订阅事件FromUserName:" + FromUserName;
+		logger.info(result);
+		responseText(result);
 	}
-
+	
+	/**
+	 * 点击菜单跳转链接时的事件推送
+	 */
 	@Override
 	protected void view() {
-		// TODO Auto-generated method stub
-
+		String link = super.wechatRequest.getEventKey();
+		logger.info("点击菜单跳转链接时的事件推送link:" + link);
+		responseText("点击菜单跳转链接时的事件推送link:" + link);
 	}
 
+	/**
+	 * 自定义菜单事件
+	 */
+	@Override
+	protected void click() {
+		String key = super.wechatRequest.getEventKey();
+		logger.info("自定义菜单事件eventKey:" + key);
+		responseText("自定义菜单事件eventKey:" + key);
+	}
+	
+	/**
+	 * 上报地理位置事件
+	 */
+	@Override
+	protected void location() {
+		String Latitude = wechatRequest.getLatitude();
+		String Longitude = wechatRequest.getLongitude();
+		String Precision = wechatRequest.getPrecision();
+		String result = "上报地理位置事件Latitude:" + Latitude + ", Longitude:" + Longitude + ", Precision:" + Precision;
+		logger.info(result);
+		responseText(result);
+	}
+	
+	/**
+	 * 模板消息发送成功推送事件
+	 */
 	@Override
 	protected void templateMsgCallback() {
 		// TODO Auto-generated method stub
 		
 	}
+	/**
+	 * 弹出地理位置选择器的事件
+	 */
+	@Override
+	protected void locationSelect() {
+		// TODO Auto-generated method stub
+	}
+	/**
+	 * 弹出拍照或者相册发图的事件
+	 */
+	@Override
+	protected void picPhotoOrAlbum() {
+		// TODO Auto-generated method stub
+	}
+	/**
+	 * 弹出系统拍照发图的事件
+	 */
+	@Override
+	protected void picSysPhoto() {
+		String Count = wechatRequest.getSendPicsInfo().getCount();
+		String result = "弹出系统拍照发图的事件Count:" + Count ;
+		logger.info(result);
+		responseText(result);
+	}
+	/**
+	 * 扫码推事件且弹出“消息接收中”提示框的事件
+	 */
+	@Override
+	protected void picWeixin() {
+		// TODO Auto-generated method stub
+	}
+	/**
+	 * 扫码推事件
+	 */
+	@Override
+	protected void scanCodePush() {
+		String ScanCodeInfo = wechatRequest.getScanCodeInfo();
+		String ScanType = wechatRequest.getScanType();
+		String ScanResult = wechatRequest.getScanResult();
+		String result = "扫码推事件ScanCodeInfo:" + ScanCodeInfo + ", ScanType:" + ScanType + ", ScanResult:" + ScanResult;
+		logger.info(result);
+		responseText(result);
+	}
+	/**
+	 * 扫码推事件且弹出“消息接收中”提示框的事件
+	 */
+	@Override
+	protected void scanCodeWaitMsg() {
+		// TODO Auto-generated method stub
+	}
+
+
 
 }

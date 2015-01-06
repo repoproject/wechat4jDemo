@@ -1,6 +1,7 @@
 package com.sample.wechat;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,8 +26,10 @@ public class Hello extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String result = "你好，wechat4j";
-		response.setHeader("content-type", "text/html;charset=UTF-8");
-		response.getOutputStream().write(result.getBytes());
+		response.setCharacterEncoding("UTF-8");//服务器编码
+		response.setHeader("content-type", "text/html;charset=UTF-8");//浏览器编码
+		PrintWriter out = response.getWriter();
+		out.println(result);
 	}
 
 	/**
@@ -34,8 +37,10 @@ public class Hello extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String result = "你好，wechat4j";
+		response.setCharacterEncoding("UTF-8");
 		response.setHeader("content-type", "text/html;charset=UTF-8");
-		response.getOutputStream().write(result.getBytes());
+		PrintWriter out = response.getWriter();
+		out.println(result);
 	}
 
 }
