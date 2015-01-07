@@ -8,6 +8,11 @@
 *.war
 *.ear
 
+#self file
+src/wechat4j.properties
+WebContent/WEB-INF/classes
+
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-/src/wechat4j.properties
+

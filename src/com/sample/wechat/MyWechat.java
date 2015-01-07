@@ -6,6 +6,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.sword.wechat4j.WechatSupport;
 
+
+/**
+ * 微信服务桩
+ * @author ChengNing
+ * @date   2015年1月7日
+ */
 public class MyWechat extends WechatSupport {
 	
 	private static Logger logger = Logger.getLogger(MyWechat.class);
@@ -206,22 +212,42 @@ public class MyWechat extends WechatSupport {
 	 */
 	@Override
 	protected void templateMsgCallback() {
-		// TODO Auto-generated method stub
-		
+		String MsgID = wechatRequest.getMsgId();
+		String Status = wechatRequest.getStatus();
+		String result = "模板消息发送成功推送事件MsgID:" + MsgID + ", Status:" + Status;
+		logger.info(result);
 	}
 	/**
 	 * 弹出地理位置选择器的事件
 	 */
 	@Override
 	protected void locationSelect() {
-		// TODO Auto-generated method stub
+		String Location_X = wechatRequest.getSendLocationInfo().getLocation_X();
+		String Location_Y = wechatRequest.getSendLocationInfo().getLocation_Y();
+		String Scale = wechatRequest.getSendLocationInfo().getScale();
+		String Label = wechatRequest.getSendLocationInfo().getLabel();
+		String Poiname = wechatRequest.getSendLocationInfo().getPoiname();
+		String result = "弹出地理位置选择器的事件Location_X:" + Location_X + 
+				", Location_Y:" + Location_Y+ 
+				", Scale:" + Scale+ 
+				", Label:" + Label+ 
+				", Poiname:" + Poiname;
+		logger.info(result);
+		responseText(result);
 	}
 	/**
 	 * 弹出拍照或者相册发图的事件
 	 */
 	@Override
 	protected void picPhotoOrAlbum() {
-		// TODO Auto-generated method stub
+		String Count = wechatRequest.getSendPicsInfo().getCount();
+		String PicMd5Sum = "";
+		if(StringUtils.isNotBlank(Count) && !Count.equals("0")){
+			PicMd5Sum = wechatRequest.getSendPicsInfo().getItem().get(0).getPicMd5Sum();
+		}
+		String result = "弹出系统拍照发图的事件Count:" + Count + ", PicMd5Sum:" + PicMd5Sum;
+		logger.info(result);
+		responseText(result);
 	}
 	/**
 	 * 弹出系统拍照发图的事件
@@ -234,21 +260,24 @@ public class MyWechat extends WechatSupport {
 		responseText(result);
 	}
 	/**
-	 * 扫码推事件且弹出“消息接收中”提示框的事件
+	 * 弹出微信相册发图器的事件推送
 	 */
 	@Override
 	protected void picWeixin() {
-		// TODO Auto-generated method stub
+		String Count = wechatRequest.getSendPicsInfo().getCount();
+		String result = "弹出系统拍照发图的事件Count:" + Count ;
+		logger.info(result);
+		responseText(result);
 	}
 	/**
 	 * 扫码推事件
+	 * 
 	 */
 	@Override
 	protected void scanCodePush() {
-		String ScanCodeInfo = wechatRequest.getScanCodeInfo();
-		String ScanType = wechatRequest.getScanType();
-		String ScanResult = wechatRequest.getScanResult();
-		String result = "扫码推事件ScanCodeInfo:" + ScanCodeInfo + ", ScanType:" + ScanType + ", ScanResult:" + ScanResult;
+		String ScanType = wechatRequest.getScanCodeInfo().getScanType();
+		String ScanResult = wechatRequest.getScanCodeInfo().getScanResult();
+		String result = "扫码推事件ScanType:" + ScanType + ", ScanResult:" + ScanResult;
 		logger.info(result);
 		responseText(result);
 	}
@@ -257,8 +286,13 @@ public class MyWechat extends WechatSupport {
 	 */
 	@Override
 	protected void scanCodeWaitMsg() {
-		// TODO Auto-generated method stub
+		String ScanType = wechatRequest.getScanCodeInfo().getScanType();
+		String ScanResult = wechatRequest.getScanCodeInfo().getScanResult();
+		String result = "扫码推事件ScanType:" + ScanType + ", ScanResult:" + ScanResult;
+		logger.info(result);
+		responseText(result);
 	}
+	
 
 
 
