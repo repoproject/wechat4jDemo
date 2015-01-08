@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.sword.wechat4j.common.AccessToken;
-import org.sword.wechat4j.common.AccessTokenServer;
+import org.apache.log4j.Logger;
 import org.sword.wechat4j.message.CustomerMsg;
+import org.sword.wechat4j.token.AccessToken;
+import org.sword.wechat4j.token.AccessTokenServer;
+import org.sword.wechat4j.token.MemAccessTokenServer;
 import org.sword.wechat4j.user.UserManager;
 
 /**
@@ -20,6 +22,8 @@ import org.sword.wechat4j.user.UserManager;
  */
 public class Hello extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private static Logger logger = Logger.getLogger(Hello.class);
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -62,7 +66,8 @@ public class Hello extends HttpServlet {
 	 * 单个发送
 	 */
 	private void sendMsg(){
-		String accessToken = AccessTokenServer.instance().getAccessToken();
+		logger.info("主动发送消息demo");
+		String accessToken = MemAccessTokenServer.instance().getAccessToken();
 		//获得关注者列表，发送给第一个人消息
 		UserManager userManager = new UserManager(accessToken);
 		List<Object> userList = userManager.subscriberList();
