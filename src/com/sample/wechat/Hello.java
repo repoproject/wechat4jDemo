@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.sword.wechat4j.message.CustomerMsg;
 import org.sword.wechat4j.token.AccessToken;
+import org.sword.wechat4j.token.AccessTokenProxy;
 import org.sword.wechat4j.token.AccessTokenServer;
 import org.sword.wechat4j.token.MemAccessTokenServer;
 import org.sword.wechat4j.user.UserManager;
@@ -67,7 +68,7 @@ public class Hello extends HttpServlet {
 	 */
 	private void sendMsg(){
 		logger.info("主动发送消息demo");
-		String accessToken = MemAccessTokenServer.instance().getAccessToken();
+		String accessToken = AccessTokenProxy.token();
 		//获得关注者列表，发送给第一个人消息
 		UserManager userManager = new UserManager(accessToken);
 		List<Object> userList = userManager.subscriberList();
