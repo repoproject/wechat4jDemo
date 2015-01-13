@@ -68,14 +68,13 @@ public class Hello extends HttpServlet {
 	 */
 	private void sendMsg(){
 		logger.info("主动发送消息demo");
-		String accessToken = AccessTokenProxy.token();
 		//获得关注者列表，发送给第一个人消息
-		UserManager userManager = new UserManager(accessToken);
+		UserManager userManager = new UserManager();
 		List<Object> userList = userManager.subscriberList();
 		if(userList.size() > 0){
 			String toUserOpenId = userList.get(0).toString();
 			String content = "主动发送";
-			CustomerMsg customerMsg = new CustomerMsg(toUserOpenId, accessToken);
+			CustomerMsg customerMsg = new CustomerMsg(toUserOpenId);
 			customerMsg.sendText(content);
 		}
 	}

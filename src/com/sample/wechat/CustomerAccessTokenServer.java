@@ -35,6 +35,4 @@ public class CustomerAccessTokenServer extends DbAccessTokenServer {
 //		DBUtil.execute(sql);
 		return true;
 	}
-
-
 }
