@@ -29,4 +29,10 @@
     <servlet-name>Hello</servlet-name>
     <url-pattern>/index.htm</url-pattern>
   </servlet-mapping>
+
+<!--
+  	<listener>
+		<listener-class>org.sword.wechat4j.token.AccessTokenListener</listener-class>
+	</listener>
+-->
 </web-app>
