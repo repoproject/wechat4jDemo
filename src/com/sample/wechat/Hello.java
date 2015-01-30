@@ -12,10 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.sword.wechat4j.message.CustomerMsg;
-import org.sword.wechat4j.token.AccessToken;
-import org.sword.wechat4j.token.AccessTokenProxy;
-import org.sword.wechat4j.token.AccessTokenServer;
-import org.sword.wechat4j.token.MemAccessTokenServer;
 import org.sword.wechat4j.user.UserManager;
 
 /**
