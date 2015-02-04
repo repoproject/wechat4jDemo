@@ -19,8 +19,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/fluent-hc-4.3.6.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpclient-4.3.6.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpcore-4.3.3.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/wechat4j"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/sword-lang-1.2.0.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/wechat4j-1.1.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/wechat4j-1.2.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/sword-lang-2.0.0.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>
