@@ -3,14 +3,14 @@
  */
 package com.sample.wechat;
 
-import org.sword.wechat4j.token.AccessToken;
-import org.sword.wechat4j.token.DbAccessTokenServer;
+import org.sword.wechat4j.token.Token;
+import org.sword.wechat4j.token.server.CustomerServer;
 
 /**
  * @author repo_user
  * @date   2015年1月12日
  */
-public class CustomerAccessTokenServer extends DbAccessTokenServer {
+public class CustomerAccessTokenServer extends CustomerServer {
 
 	/* (non-Javadoc)
 	 * @see org.sword.wechat4j.token.DbAccessTokenServer#find()
@@ -28,9 +28,9 @@ public class CustomerAccessTokenServer extends DbAccessTokenServer {
 	 * @see org.sword.wechat4j.token.DbAccessTokenServer#save()
 	 */
 	@Override
-	public boolean save(AccessToken accessToken) {
+	public boolean save(Token accessToken) {
 		//如果没有需要插入，如果有的就更新，假设已经有了数据库配置项
-//		String sql = "update cfg set cfg.cfgValue=" + accessToken.getAccessToken() + 
+//		String sql = "update cfg set cfg.cfgValue=" + accessToken.getToken() + 
 //				" where cfg.cfgKey= 'access_token'";
 //		DBUtil.execute(sql);
 		return true;
