@@ -1,10 +1,16 @@
 package com.sample.wechat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.sword.wechat4j.WechatSupport;
+import org.sword.wechat4j.response.ArticleResponse;
+import org.sword.wechat4j.response.MusicResponse;
+import org.sword.wechat4j.response.VideoResponse;
 
 
 /**
@@ -35,6 +41,19 @@ public class MyWechat extends WechatSupport {
 		else if(content.equals("2")){
 			responseNew("图文消息", "测试图文消息", "http://upload.qqfuzhi.com/portal/showimg.php?img=e2dnYyk8PHEhIys9Y3t8Z3w9YGd8YXY9YmI9cHx%2BPHtnZ2NMen50f3xydz1wdHosPGFmYX8nTHEuJ3Z2IXFyJnUiICAqcnAnInYhcHJ2InAnKndycidwKyAgdnIqdiN1KitxdyojIysjcSAiJipyK3YqIXd1JCt1JyBxKnIkcCt1JyYkKysicCAjIiokKyogcHd1ICAhcXArciUjI3EhdyYjKiIncSclIiUqJyAkInEgKiV2IiEiJnEgKyp2cXV3cCEmJ3EjcHYqJHIrdytwIyYgIHIicHAgcXFwIiIldyIhNXIuISMrNXEuISMr", 
 					"http://www.chengn.com");
+			
+//			responseNew(title, description, picUrl, url);
+//			
+//			ArticleResponse item = new ArticleResponse();
+//			item.setTitle(title);
+//			item.setDescription(description);
+//			item.setUrl(url);
+//			item.setPicUrl(picUrl);
+//			responseNews(item);
+//			
+//			List<ArticleResponse> items = new ArrayList<ArticleResponse>();
+//			items.add(item);
+//			responseNews(items);
 		}
 		else{
 			responseText("你好，你的输入为 " + content + "\n"
@@ -55,6 +74,7 @@ public class MyWechat extends WechatSupport {
 		String result = "图片消息picUrl:" + picUrl + ", MediaId:" + MediaId + ", MsgId:" + MsgId;
 		logger.info(result);
 		responseText(result);
+		//responseImage(mediaId);
 	}
 
 	/**
@@ -68,7 +88,19 @@ public class MyWechat extends WechatSupport {
 		
 		String result = "语音消息Format:" + Format + ", MediaId:" + MediaId + ", MsgId:" + MsgId;
 		logger.info(result);
-		responseText(result);		
+		responseText(result);	
+		//responseVoice(mediaId);
+		
+		//回复音乐消息
+//		MusicResponse music = new MusicResponse();
+//		music.setTitle(title);
+//		music.setDescription(description);
+//		music.setMusicURL(musicURL);
+//		music.setHQMusicUrl(hQMusicUrl);
+//		music.setThumbMediaId(thumbMediaId);
+//		responseMusic(music);
+//		
+//		responseMusic(title, description, musicURL, hQMusicUrl, thumbMediaId);
 	}
 
 	/**
@@ -82,7 +114,16 @@ public class MyWechat extends WechatSupport {
 		
 		String result = "视频消息ThumbMediaId:" + ThumbMediaId + ", MediaId:" + MediaId + ", MsgId:" + MsgId;
 		logger.info(result);
-		responseText(result);		
+		responseText(result);
+		
+		//回复视频消息
+//		VideoResponse video = new VideoResponse();
+//		video.setTitle(title);
+//		video.setDescription(description);
+//		video.setMediaId(mediaId);
+//		responseVideo(video);
+//		
+//		responseVideo(mediaId, title, description);
 	}
 	
 	/**
